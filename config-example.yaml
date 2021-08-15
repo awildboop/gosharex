@@ -1,5 +1,5 @@
 web-server:
-  address: ""
+  address: "0.0.0.0"
   port: 8181
 features:
   enable-redirector: true
@@ -17,10 +17,10 @@ features:
 mongodb: # if uri present, other info ignored
   uri:
   host:
-  port: 3
+  port: 27017
   use-srv: no
   user:
   pass:
   auth-source: "admin"
   use-auth: yes
-  db:
+  db: "sharex"
