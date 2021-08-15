@@ -1,0 +1,26 @@
+web-server:
+  address: ""
+  port: 8181
+features:
+  enable-redirector: true
+  enable-images: false
+  enable-text: false
+  enable-files: false
+  api:
+    enable-api: true
+    enable-auth: true
+    auth-token: ""
+    manage-redirectors: true
+    manage-images: false
+    manage-text: false
+    manage-files: false
+mongodb: # if uri present, other info ignored
+  uri:
+  host:
+  port: 3
+  use-srv: no
+  user:
+  pass:
+  auth-source: "admin"
+  use-auth: yes
+  db:
