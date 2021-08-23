@@ -6,7 +6,8 @@ import (
 	"time"
 
 	"github.com/awildboop/gosharex/common"
-	"github.com/awildboop/gosharex/handlers"
+	"github.com/awildboop/gosharex/handlers/api"
+	features "github.com/awildboop/gosharex/handlers/features"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -21,6 +22,7 @@ func main() {
 	// cfAPI := conf.Features.API
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	todo := context.TODO()
 	defer cancel()
 
 	client, err := mongo.Connect(ctx, options.Client().ApplyURI(conf.GetURI()))
@@ -37,14 +39,26 @@ func main() {
 	redirects := client.Database(conf.MongoDB.DB).Collection("redirects")
 
 	r := gin.Default()
-	v1 := r.Group("v1")
 
 	// r = redirect (shortener), i = image, t = text, f = file,
 	// potentiall merge image/text/file into a single one since they really are all just files in the end
 	if cfFeatures.EnableRedirector {
-		v1.GET("/r/", handlers.HandleRedirect(redirects))
+		r.GET("/r/*identifier", features.HandleRedirect(redirects, todo))
 	}
 
+	if cfFeatures.API.EnableAPI {
+		apiFeatures := cfFeatures.API
+		v1 := r.Group("v1")
+
+		if apiFeatures.ManageRedirects {
+			v1.GET("/r", api.GetRedirect(redirects, todo))
+			v1.POST("/r", api.CreateRedirect(redirects, todo))
+			v1.PUT("/r", api.CreateRedirect(redirects, todo))
+			v1.DELETE("/r", api.DeleteRedirect(redirects, todo))
+		}
+	}
+
+	r.Run(conf.GetWebserverAddress())
 	// if cfAPI.EnableAPI {
 	// }
 	// TODO: Load config, initiate web server

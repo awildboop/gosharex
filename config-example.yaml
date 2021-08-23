@@ -10,7 +10,7 @@ features:
     enable-api: true
     enable-auth: true
     auth-token: ""
-    manage-redirectors: true
+    manage-redirects: true
     manage-images: false
     manage-text: false
     manage-files: false

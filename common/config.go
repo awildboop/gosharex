@@ -9,7 +9,7 @@ import (
 )
 
 type Configuration struct {
-	WebServer struct {
+	Webserver struct {
 		Address string `yaml:"address"`
 		Port    int    `yaml:"port"`
 	} `yaml:"web-server"`
@@ -19,11 +19,13 @@ type Configuration struct {
 		EnableText       bool `yaml:"enable-text"`
 		EnableFiles      bool `yaml:"enable-files"`
 		API              struct {
-			EnableAPI         bool `yaml:"manage-redirectors"`
-			ManageRedirectors bool `yaml:"manage-redirectors"`
-			ManageImages      bool `yaml:"manage-images"`
-			ManageText        bool `yaml:"manage-text"`
-			ManageFiles       bool `yaml:"manage-files"`
+			EnableAPI       bool   `yaml:"enable-api"`
+			EnableAuth      bool   `yaml:"enable-auth"`
+			AuthToken       string `yaml:"auth-token"`
+			ManageRedirects bool   `yaml:"manage-redirects"`
+			ManageImages    bool   `yaml:"manage-images"`
+			ManageText      bool   `yaml:"manage-text"`
+			ManageFiles     bool   `yaml:"manage-files"`
 		} `yaml:"api"`
 	} `yaml:"features"`
 	MongoDB struct {
@@ -80,4 +82,8 @@ func (conf *Configuration) GetURI() string {
 	}
 
 	return fmt.Sprintf("mongodb://%s:%d/?authSource=%s", mdb.Host, mdb.Port, mdb.AuthSource)
+}
+
+func (conf *Configuration) GetWebserverAddress() string {
+	return fmt.Sprintf("%s:%d", conf.Webserver.Address, conf.Webserver.Port)
 }
