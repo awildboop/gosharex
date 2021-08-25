@@ -19,7 +19,6 @@ func main() {
 		log.Fatalf("Encountered error while loading configuration file\n%v\n", err)
 	}
 	cfFeatures := conf.Features
-	// cfAPI := conf.Features.API
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	todo := context.TODO()
@@ -41,7 +40,7 @@ func main() {
 	r := gin.Default()
 
 	// r = redirect (shortener), i = image, t = text, f = file,
-	// potentiall merge image/text/file into a single one since they really are all just files in the end
+	// potentially merge image/text/file into a single one since they really are all just files in the end
 	if cfFeatures.EnableRedirector {
 		r.GET("/r/*identifier", features.HandleRedirect(redirects, todo))
 	}
@@ -59,7 +58,4 @@ func main() {
 	}
 
 	r.Run(conf.GetWebserverAddress())
-	// if cfAPI.EnableAPI {
-	// }
-	// TODO: Load config, initiate web server
 }
