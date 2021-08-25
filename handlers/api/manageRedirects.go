@@ -25,8 +25,14 @@ func DeleteRedirect(redirects *mongo.Collection, todo context.Context) func(*gin
 
 func CreateRedirect(redirects *mongo.Collection, todo context.Context) func(*gin.Context) {
 	return func(ctx *gin.Context) {
+		identifier := ctx.Query("identifier")
+
+		if identifier == "" {
+			identifier = common.RandomString(8)
+		}
+
 		newRedirect := &common.Redirect{
-			Identifier:   ctx.Query("identifier"),
+			Identifier:   identifier,
 			Location:     ctx.Query("location"),
 			CreationDate: "",
 			Clicks:       0,
