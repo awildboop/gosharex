@@ -51,8 +51,8 @@ func main() {
 
 		if apiFeatures.ManageRedirects {
 			v1.GET("/r", api.GetRedirect(redirects, todo))
-			v1.POST("/r", api.CreateRedirect(redirects, todo))
-			v1.PUT("/r", api.CreateRedirect(redirects, todo))
+			v1.POST("/r", api.CreateRedirect(redirects, conf, todo))
+			v1.PUT("/r", api.CreateRedirect(redirects, conf, todo))
 			v1.DELETE("/r", api.DeleteRedirect(redirects, todo))
 		}
 	}

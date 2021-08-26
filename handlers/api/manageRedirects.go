@@ -23,10 +23,12 @@ func DeleteRedirect(redirects *mongo.Collection, todo context.Context) func(*gin
 	}
 }
 
-func CreateRedirect(redirects *mongo.Collection, todo context.Context) func(*gin.Context) {
+func CreateRedirect(redirects *mongo.Collection, conf *common.Configuration, todo context.Context) func(*gin.Context) {
 	return func(ctx *gin.Context) {
 		identifier := ctx.Query("identifier")
 
+		// we are assuming the random string is unused, TODO: add checking of random identifier,
+		// potentially split no provided/provided identifier into it's own if/else block since they'll be quite similar.
 		if identifier == "" {
 			identifier = common.RandomString(8)
 		}
@@ -35,6 +37,7 @@ func CreateRedirect(redirects *mongo.Collection, todo context.Context) func(*gin
 			Identifier:   identifier,
 			Location:     ctx.Query("location"),
 			CreationDate: "",
+			DeletionKey:  common.RandomString(32), // unused, todo: redo delete API to check deletion key (also api key)
 			Clicks:       0,
 		}
 
@@ -49,7 +52,11 @@ func CreateRedirect(redirects *mongo.Collection, todo context.Context) func(*gin
 			return
 		}
 
-		ctx.Writer.WriteHeader(http.StatusCreated)
+		ctx.JSON(http.StatusCreated, &common.RedirectCreated{
+			ShortenedURL: conf.Webserver.BaseURL + "r/" + newRedirect.Identifier,
+			TargetURL:    newRedirect.Location,
+			DeletionURL:  "NOT IMPLEMENTED",
+		})
 	}
 }
 

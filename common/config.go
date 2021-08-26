@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"strings"
 
 	"gopkg.in/yaml.v3"
 )
@@ -12,6 +13,7 @@ type Configuration struct {
 	Webserver struct {
 		Address string `yaml:"address"`
 		Port    int    `yaml:"port"`
+		BaseURL string `yaml:"base-url"`
 	} `yaml:"web-server"`
 	Features struct {
 		EnableRedirector bool `yaml:"enable-redirector"`
@@ -41,7 +43,7 @@ type Configuration struct {
 	} `yaml:"mongodb"`
 }
 
-func LoadConfiguration(fileLocation string) (conf Configuration, err error) {
+func LoadConfiguration(fileLocation string) (conf *Configuration, err error) {
 	file, err := os.Open(fileLocation)
 	if err != nil {
 		err = fmt.Errorf("encountered error while opening configuration file\n%v", err)
@@ -58,6 +60,10 @@ func LoadConfiguration(fileLocation string) (conf Configuration, err error) {
 	if err != nil {
 		err = fmt.Errorf("encountered error while unmarshaling configuration data\n%v", err)
 		return
+	}
+
+	if !strings.HasSuffix(conf.Webserver.BaseURL, "/") {
+		conf.Webserver.BaseURL = conf.Webserver.BaseURL + "/"
 	}
 
 	return

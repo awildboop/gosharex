@@ -1,6 +1,7 @@
 web-server:
   address: "0.0.0.0"
   port: 8181
+  base-url: "http://s.example.com/"
 features:
   enable-redirector: true
   enable-images: false
