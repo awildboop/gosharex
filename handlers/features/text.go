@@ -21,6 +21,8 @@ func HandleText(texts *mongo.Collection, conf *common.Configuration, todo contex
 			return
 		}
 
+		texts.UpdateOne(todo, bson.M{"identifier": identifier}, bson.M{"$set": bson.M{"views": text.Views + 1}})
+
 		ctx.HTML(http.StatusOK, "text.html", gin.H{
 			"url":     ctx.Request.URL.RawPath,
 			"title":   conf.Pages.PageTitles.TextTitle,
