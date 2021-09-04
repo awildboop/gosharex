@@ -30,6 +30,11 @@ type Configuration struct {
 			ManageFiles     bool   `yaml:"manage-files"`
 		} `yaml:"api"`
 	} `yaml:"features"`
+	Pages struct {
+		PageTitles struct {
+			TextTitle string `yaml:"text-title"`
+		} `yaml:"page-titles"`
+	} `yaml:"pages"`
 	MongoDB struct {
 		URI        string `yaml:"uri"`
 		Host       string `yaml:"host"`

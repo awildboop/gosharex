@@ -3,6 +3,8 @@ package api
 import (
 	"context"
 	"net/http"
+	"strings"
+	"time"
 
 	"github.com/awildboop/gosharex/common"
 	"github.com/gin-gonic/gin"
@@ -35,8 +37,8 @@ func CreateRedirect(redirects *mongo.Collection, conf *common.Configuration, tod
 
 		newRedirect := &common.Redirect{
 			Identifier:   identifier,
-			Location:     ctx.Query("location"),
-			CreationDate: "",
+			Location:     strings.Trim(ctx.Query("location"), " $/^\\"),
+			CreationDate: time.Now().Format(time.RFC3339),
 			DeletionKey:  common.RandomString(32), // unused, todo: redo delete API to check deletion key (also api key)
 			Clicks:       0,
 		}

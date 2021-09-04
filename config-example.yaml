@@ -15,6 +15,9 @@ features:
     manage-images: false
     manage-text: false
     manage-files: false
+pages:
+  page-titles:
+    text-title: "Text @ My Uploader"
 mongodb: # if uri present, other info ignored
   uri:
   host:
