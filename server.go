@@ -7,7 +7,7 @@ import (
 
 	"github.com/awildboop/gosharex/common"
 	"github.com/awildboop/gosharex/handlers/api"
-	features "github.com/awildboop/gosharex/handlers/features"
+	"github.com/awildboop/gosharex/handlers/features"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"

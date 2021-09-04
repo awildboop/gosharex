@@ -13,6 +13,7 @@ type RedirectCreated struct {
 	TargetURL    string `json:"target_url"`
 	DeletionURL  string `json:"deletion_url"`
 }
+
 type Text struct {
 	Identifier   string `json:"identifier"`
 	Content      string `json:"content"`
