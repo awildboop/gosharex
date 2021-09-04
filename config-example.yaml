@@ -1,13 +1,13 @@
 web-server:
-  address: "0.0.0.0"
-  port: 8181
-  base-url: "http://s.example.com/"
+  address: "0.0.0.0" # the ip the webserver binds to/listens on
+  port: 8181 # the port the webserver binds to/listens on
+  base-url: "https://s.example.com/" # just used in upload responses
 features:
   enable-redirector: true
   enable-images: false
   enable-text: false
   enable-files: false
-  api:
+  api: # Allows deleting of posts & fetching statistics with REST API
     enable-api: true
     enable-auth: true
     auth-token: ""
@@ -15,8 +15,8 @@ features:
     manage-images: false
     manage-text: false
     manage-files: false
-pages:
-  page-titles:
+pages: 
+  page-titles: # Used as the tab title & for discord embeds
     text-title: "Text @ My Uploader"
 mongodb: # if uri present, other info ignored
   uri:
