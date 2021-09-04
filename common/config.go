@@ -92,7 +92,7 @@ func (conf *Configuration) GetURI() string {
 		return fmt.Sprintf("mongodb://%s:%s@%s:%d/?authSource=%s", mdb.User, mdb.Pass, mdb.Host, mdb.Port, mdb.AuthSource)
 	}
 
-	return fmt.Sprintf("mongodb://%s:%d/?authSource=%s", mdb.Host, mdb.Port, mdb.AuthSource)
+	return fmt.Sprintf("mongodb://%s:%d", mdb.Host, mdb.Port)
 }
 
 func (conf *Configuration) GetWebserverAddress() string {
