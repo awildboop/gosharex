@@ -2,6 +2,7 @@ web-server:
   address: "0.0.0.0" # the ip the webserver binds to/listens on
   port: 8181 # the port the webserver binds to/listens on
   base-url: "https://s.example.com/" # just used in upload responses
+  not-found-redirect: "https://example.com"
 features:
   enable-redirector: true
   enable-images: false
@@ -15,9 +16,13 @@ features:
     manage-images: false
     manage-text: false
     manage-files: false
+  extra:
+    use-raw-image-url: true
+    compress-images: false # currently does nothing
 pages: 
   page-titles: # Used as the tab title & for discord embeds
     text-title: "Text @ My Uploader"
+    image-title: "Image @ My Uploader"
 mongodb: # if uri present, other info ignored
   uri:
   host:

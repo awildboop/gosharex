@@ -10,14 +10,14 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-func HandleRedirect(redirects *mongo.Collection, todo context.Context) func(*gin.Context) {
+func HandleRedirect(redirects *mongo.Collection, conf *common.Configuration, todo context.Context) func(*gin.Context) {
 	return func(ctx *gin.Context) {
 		identifier := ctx.Param("identifier")[1:]
 
 		var redirect common.Redirect
 
 		if err := redirects.FindOne(context.TODO(), bson.M{"identifier": identifier}).Decode(&redirect); err != nil {
-			ctx.Redirect(http.StatusTemporaryRedirect, "https://awildboop.com")
+			ctx.Redirect(http.StatusTemporaryRedirect, conf.Webserver.NotFoundRedirect)
 			return
 		}
 

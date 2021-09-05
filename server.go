@@ -37,6 +37,7 @@ func main() {
 
 	redirects := client.Database(conf.MongoDB.DB).Collection("redirects")
 	texts := client.Database(conf.MongoDB.DB).Collection("texts")
+	images := client.Database(conf.MongoDB.DB).Collection("images")
 
 	r := gin.Default()
 	r.LoadHTMLGlob("templates/*")
@@ -44,7 +45,7 @@ func main() {
 	// r = redirect (shortener), i = image, t = text, f = file,
 	// potentially merge image/text/file into a single one since they really are all just files in the end
 	if cfFeatures.EnableRedirector {
-		r.GET("/r/*identifier", features.HandleRedirect(redirects, todo))
+		r.GET("/r/*identifier", features.HandleRedirect(redirects, conf, todo))
 		r.POST("/r", api.CreateRedirect(redirects, conf, todo))
 		r.PUT("/r", api.CreateRedirect(redirects, conf, todo))
 	}
@@ -55,6 +56,13 @@ func main() {
 		r.PUT("/t", api.CreateText(texts, conf, todo))
 	}
 
+	if cfFeatures.EnableImages {
+		r.GET("/i/*identifier", features.HandleImage(images, conf, todo))
+		r.GET("/ri/*identifier", features.HandleRawImage(images, conf, todo))
+		r.POST("/i", api.CreateImage(images, conf, todo))
+		r.PUT("/i", api.CreateImage(images, conf, todo))
+	}
+
 	if cfFeatures.API.EnableAPI {
 		apiFeatures := cfFeatures.API
 		v1 := r.Group("v1")
@@ -63,6 +71,12 @@ func main() {
 			v1.GET("/r", api.GetRedirect(redirects, todo)) // Returns information & stats about the redirect
 			v1.DELETE("/r", api.DeleteRedirect(redirects, todo))
 		}
+
+		// if apiFeatures.ManageText {
+		// }
+
+		// if apiFeatures.ManageImages {
+		// }
 	}
 
 	r.Run(conf.GetWebserverAddress())

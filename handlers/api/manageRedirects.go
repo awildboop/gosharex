@@ -48,8 +48,7 @@ func CreateRedirect(redirects *mongo.Collection, conf *common.Configuration, tod
 			return
 		}
 
-		_, err := redirects.InsertOne(todo, newRedirect)
-		if err != nil {
+		if _, err := redirects.InsertOne(todo, newRedirect); err != nil {
 			ctx.JSON(http.StatusInternalServerError, &common.ErrorResponse{Message: err.Error(), Code: http.StatusInternalServerError})
 			return
 		}

@@ -1,10 +1,15 @@
 package common
 
 import (
+	"fmt"
 	"math/rand"
+	"net/http"
+	"runtime"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/gin-gonic/gin"
 )
 
 const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -12,6 +17,15 @@ const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 func HasAnyPrefix(s string, prefixes ...string) bool {
 	for _, p := range prefixes {
 		if strings.HasPrefix(s, p) {
+			return true
+		}
+	}
+	return false
+}
+
+func HasAnySuffix(s string, suffixes ...string) bool {
+	for _, su := range suffixes {
+		if strings.HasSuffix(s, su) {
 			return true
 		}
 	}
@@ -38,4 +52,16 @@ func RandomString(n int) string {
 		b[i] = letters[rand.Int63()%int64(len(letters))]
 	}
 	return string(b)
+}
+
+func HandleErr(err error, ctx *gin.Context) bool {
+	if err != nil {
+		fmt.Println(runtime.Caller(1))
+		ctx.JSON(http.StatusInternalServerError, &ErrorResponse{
+			Code:    http.StatusInternalServerError,
+			Message: err.Error(),
+		})
+		return true
+	}
+	return false
 }

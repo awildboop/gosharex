@@ -54,8 +54,7 @@ func CreateText(texts *mongo.Collection, conf *common.Configuration, todo contex
 			return
 		}
 
-		_, err := texts.InsertOne(todo, newText)
-		if err != nil {
+		if _, err := texts.InsertOne(todo, newText); err != nil {
 			ctx.JSON(http.StatusInternalServerError, &common.ErrorResponse{Message: err.Error(), Code: http.StatusInternalServerError})
 			return
 		}

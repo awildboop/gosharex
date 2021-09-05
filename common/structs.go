@@ -29,6 +29,21 @@ type TextCreated struct {
 	DeletionURL string `json:"deletion_url"`
 }
 
+type Image struct {
+	Identifier   string `json:"identifier"`
+	FileLocation string `json:"file_location"`
+	DeletionKey  string `json:"deletion_key"`
+	CreationDate string `json:"creation_date"`
+	FileSize     int64  `json:"file_size"`
+	Views        int    `json:"views"`
+}
+
+type ImageCreated struct {
+	LocationURL string `json:"location_url"`
+	FileSize    int64  `json:"file_size"`
+	DeletionURL string `json:"deletion_url"`
+}
+
 type ErrorResponse struct {
 	Message string `json:"error"`
 	Code    int    `json:"code"`

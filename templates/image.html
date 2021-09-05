@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Allows Discord to generate embeds from URL -->
+        <meta property="og:type" content="image">
+        <meta property="og:url" content="{{.url}}">
+        <meta property="og:title" content="{{.title}}">
+        <meta property="og:image" content="{{.image_location}}">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{{.title}}</title>
+
+        <style>
+            body, html {
+              height: 100%;
+              margin: 0;
+            }
+            
+            .bg {
+              /* The image used */
+              background-image: url("{{.image_location}}");
+            
+              /* Full height */
+              height: 100%; 
+            
+              /* Center and scale the image nicely */
+              background-position: center;
+              background-repeat: no-repeat;
+              background-size: cover;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="bg"></div>
+    </body>
+</html>

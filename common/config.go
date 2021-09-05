@@ -11,9 +11,10 @@ import (
 
 type Configuration struct {
 	Webserver struct {
-		Address string `yaml:"address"`
-		Port    int    `yaml:"port"`
-		BaseURL string `yaml:"base-url"`
+		Address          string `yaml:"address"`
+		Port             int    `yaml:"port"`
+		BaseURL          string `yaml:"base-url"`
+		NotFoundRedirect string `yaml:"not-found-redirect"`
 	} `yaml:"web-server"`
 	Features struct {
 		EnableRedirector bool `yaml:"enable-redirector"`
@@ -29,10 +30,15 @@ type Configuration struct {
 			ManageText      bool   `yaml:"manage-text"`
 			ManageFiles     bool   `yaml:"manage-files"`
 		} `yaml:"api"`
+		Extra struct {
+			CompressImages bool `yaml:"compress-images"`
+			UseRawImageURL bool `yaml:"use-raw-image-url"`
+		} `yaml:"extra"`
 	} `yaml:"features"`
 	Pages struct {
 		PageTitles struct {
-			TextTitle string `yaml:"text-title"`
+			TextTitle  string `yaml:"text-title"`
+			ImageTitle string `yaml:"image-title"`
 		} `yaml:"page-titles"`
 	} `yaml:"pages"`
 	MongoDB struct {

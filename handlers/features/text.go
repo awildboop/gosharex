@@ -17,7 +17,7 @@ func HandleText(texts *mongo.Collection, conf *common.Configuration, todo contex
 		var text common.Text
 
 		if err := texts.FindOne(context.TODO(), bson.M{"identifier": identifier}).Decode(&text); err != nil {
-			ctx.Redirect(http.StatusTemporaryRedirect, "https://awildboop.com")
+			ctx.Redirect(http.StatusTemporaryRedirect, conf.Webserver.NotFoundRedirect)
 			return
 		}
 
